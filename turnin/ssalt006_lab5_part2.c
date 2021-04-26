@@ -14,7 +14,7 @@
 #endif
 
 
-enum SM2_States {SM2_Start, SM2_initial, SM2_Increment, SM2_Decrement, SM2_wait_minus, SM2_ReadyButton, SM2_Reset, SM2_wait_plus } SM2_State;
+enum SM2_States {SM2_Start, SM2_Increment, SM2_Decrement, SM2_wait_minus, SM2_ReadyButton, SM2_Reset, SM2_wait_plus } SM2_State;
 
 
 int main(void) {
@@ -33,13 +33,8 @@ int main(void) {
 	unsigned char tempC; // hold value of PORTB for if checks 
 switch(SM2_State) { // Transitions
       case SM2_Start:
-         SM2_State = SM2_initial;
-         break;
-
-         case SM2_initial: 
-         if (1) {
-            SM2_State = SM2_ReadyButton;
-         }
+	 PORTC = 0x07;
+         SM2_State = SM2_ReadyButton;
          break;
 
       case SM2_Increment: 
@@ -122,13 +117,10 @@ switch(SM2_State) { // Transitions
          break;
 
       default:
-         SM2_State = SM2_initial;
+         SM2_State = SM2_ReadyButton;
    } // Transitions
 
    switch(SM2_State) { // State actions
-      case SM2_initial:
-         PORTC = 0x07;
-         break;
 
       case SM2_Increment:
 	 tempC = PORTC; 
